@@ -1,0 +1,5 @@
+.python-version
+__pycache__
+*.egg-info
+praw.ini
+env.sh
