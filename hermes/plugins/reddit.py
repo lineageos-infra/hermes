@@ -30,7 +30,7 @@ class Reddit(Plugin):
                 }
                 self.bot.slack_client.api_call(
                     "chat.postMessage",
-                    channel=self.bot.util.get_cid("spam"),
+                    channel=self.bot.util.get_cid("reddit"),
                     attachments=[attachment],
                     unfurl_links=True,
                     as_user=True,
