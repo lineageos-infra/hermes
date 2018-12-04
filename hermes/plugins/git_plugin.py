@@ -16,7 +16,7 @@ class GitPlugin(Plugin):
             [
                 "Usage:",
                 "'remote' is always in the form 'https://github.com/zifnab06/android.git#lineage-16.0",
-                "'local' is always in the form LineageOS/android#lineage-16.0",
+                "'local' is always in the form LineageOS/android.git#lineage-16.0",
                 "",
                 "gitadmin fp <remote> <local> - forcepush remote to local",
             ]
