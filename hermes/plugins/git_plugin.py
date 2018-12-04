@@ -1,6 +1,5 @@
 import re
 
-import git
 import requests
 from hermes.plugins import Plugin
 
