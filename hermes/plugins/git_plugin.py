@@ -41,7 +41,7 @@ class GitPlugin(Plugin):
                 )
             else:
                 remote_repo, remote_branch = remote.split("#")
-                local_repo, local_branch = remote.split("#")
+                local_repo, local_branch = local.split("#")
                 gitlab_url = f"https://gitlab.com/api/v4/projects/9750215/trigger/pipeline?token={self.bot.config['GITLAB_FORCEPUSH_TRIGGER_TOKEN']}&ref=master"
                 data = {
                     "variables[OUR_REPO]": local_repo,
