@@ -9,7 +9,7 @@ class Gerrit(Plugin):
         self.gerrit_url = "https://review.lineageos.org/"
         self.rest = GerritRestAPI(url=self.gerrit_url)
         self.bot.register_regex(
-            f"https://review\.lineageos\.org/c/(?:.*/)*(\d+)", self.gerrit_change
+            f"https://review\.lineageos\.org/(?:(?:#\/)?c\/(?:LineageOS\/[a-zA-Z_0-9\-]*\/\+\/)?)?(\d+)", self.gerrit_change
         )
 
     def gerrit_change(self, event, match):
