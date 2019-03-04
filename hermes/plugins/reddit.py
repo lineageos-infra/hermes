@@ -18,7 +18,7 @@ class Reddit(Plugin):
                 attachment = {
                     "fallback": post.url,
                     "title": "{} * /r/LineageOS".format(post.title),
-                    "title_link": post.url,
+                    "title_link": "https://www.reddit.com{}".format(post.permalink),
                     "text": post.selftext[:140]
                     if hasattr(post, "selftext")
                     else "" + "..."
