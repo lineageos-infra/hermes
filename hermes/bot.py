@@ -48,8 +48,7 @@ class Bot:
                             job()
                         except Exception as e:
                             print(f"Error: {e}")
-        time.sleep(1)
-        pass
+            time.sleep(1)
 
     def run(self):
         """Run the bot
