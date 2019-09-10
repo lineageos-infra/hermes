@@ -7,7 +7,6 @@ bot.config["GITLAB_FORCEPUSH_TRIGGER_TOKEN"] = os.environ.get("GITLAB_FORCEPUSH_
 from hermes.plugins import Echo, Utils, Cve, Reddit, Gerrit, GitPlugin
 
 Cve(bot)
-Echo(bot)
 Reddit(bot)
 Utils(bot)
 Gerrit(bot)
