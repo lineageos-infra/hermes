@@ -106,27 +106,24 @@ class Bot:
 
         return decorator
 
-    def require_admin(self, f):
-        """Requires admin for a command/regex.
-        """
-
-        @wraps(f)
-        def wrapper(*args, **kwargs):
-            print(args, kwargs)
-            if self.util.is_admin(args[0].get("user", "")):
-                return f(*args, **kwargs)
-            else:
-                channel = args[0].get("channel", "")
-                if channel:
-                    self.slack_client.api_call(
-                        "chat.postMessage",
-                        channel=channel,
-                        text="You aren't allowed to do that.",
-                        as_user=True,
-                    )
-                    return lambda args, kwargs: None
-
-        return wrapper
+    def require_perm(self, level):
+        def decorate(func):
+            @wraps(func)
+            def wrapper(*args, **kwargs):
+                if self.util.get_perm(args[0].get("user", "")) >= level:
+                    return func(*args, **kwargs)
+                else:
+                    channel = args[0].get("channel", "")
+                    if channel:
+                        self.slack_client.api_call(
+                            "chat.postMessage",
+                            channel=channel,
+                            text="You aren't allowed to do that.",
+                            as_user=True,
+                        )
+                        return lambda args, kwargs: None
+            return wrapper
+        return decorate
 
     def register_job(self, timer, f):
         print(f"Registering job {f.__name__} to run every {timer} seconds")

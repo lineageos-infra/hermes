@@ -8,7 +8,7 @@ class GitPlugin(Plugin):
     def __init__(self, bot):
         super().__init__(bot)
         assert self.bot.config.get("GITLAB_FORCEPUSH_TRIGGER_TOKEN")
-        self.bot.register_command("gitadmin", self.bot.require_admin(self.gitadmin))
+        self.bot.register_command("gitadmin", self.bot.require_perm(50)(self.gitadmin))
 
     def gitadmin(self, event, args):
         """Git admin utilities. !gitadmin help for more information"""

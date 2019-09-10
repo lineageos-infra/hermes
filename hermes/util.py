@@ -20,10 +20,16 @@ class Util:
     def update_users(self):
         users = self.bot.slack_client.api_call("users.list")
         for user in users.get("members"):
-            self.bot.redis.hset("users:uid_name", user["id"], user["name"])
-            self.bot.redis.hset("users:name_uid", user["name"], user["id"])
+            if user["profile"]["display_name"] and " " not in user["profile"]["display_name"]:
+                username = user["profile"]["display_name"]
+            else:
+                username = user["name"]
+            self.bot.redis.hset("users:uid_name", user["id"], username)
+            self.bot.redis.hset("users:name_uid", username, user["id"])
             if user.get("is_admin", False) or user.get("is_owner", False):
-                self.bot.redis.sadd("admin", user["id"])
+                self.bot.redis.hset("permissions", user["id"], 90)
+            if username == "zifnab":
+                self.bot.redis.hset("permissions", user["id"], 9001)
 
     def get_username(self, uid):
         username = self.bot.redis.hget("users:uid_name", uid)
@@ -33,5 +39,9 @@ class Util:
         uid = self.bot.redis.hget("users:name_uid", username)
         return uid.decode("utf-8") if uid else None
 
-    def is_admin(self, uid):
-        return self.bot.redis.sismember("admin", uid)
+    def get_perm(self, uid):
+        level = self.bot.redis.hget("permissions", uid)
+        if not level:
+            return 0
+        else:
+            return int(level)
