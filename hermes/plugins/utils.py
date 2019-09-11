@@ -39,7 +39,7 @@ class Utils(Plugin):
 
     def echo(self, event, args):
         self.bot.slack_client.api_call(
-            "chat.postMessage", channel=event["channel"], text=f"{event['user']} {event['channel']} {args}", as_user=True
+            "chat.postMessage", channel=event["channel"], text=f"{event['user']} {event['channel']} {args}".replace("<", "_LT_").replace(">", "_GT_"), as_user=True
         )
 
 
