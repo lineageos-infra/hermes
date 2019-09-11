@@ -20,10 +20,7 @@ class Util:
     def update_users(self):
         users = self.bot.slack_client.api_call("users.list")
         for user in users.get("members"):
-            if user["profile"]["display_name"] and " " not in user["profile"]["display_name"]:
-                username = user["profile"]["display_name"]
-            else:
-                username = user["name"]
+            username = user["name"]
             self.bot.redis.hset("users:uid_name", user["id"], username)
             self.bot.redis.hset("users:name_uid", username, user["id"])
             if user.get("is_admin", False) or user.get("is_owner", False):
