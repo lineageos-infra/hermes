@@ -114,13 +114,15 @@ class Utils(Plugin):
             uid = self.bot.util.get_uid(user)
             new_level = int(args[2])
             level = self.bot.util.get_perm(event["user"])
-            if uid == event["user"]:
-                text = f"This is dumb. Your problem. It's done."
-                self.bot.redis.hset("permissions", uid, new_level)
-            elif not uid:
+            if not uid:
                 text = f"I'm sorry but {user} wasn't found"
             elif new_level >= level:
                 text = f"I'm sorry but you can't do that, you can only assign permissions below your level ({new_level} >= {level})"
+            elif self.bot.util.get_perm(uid) > level:
+                text = f"I'm sorry but you can't change {user}'s level"
+            elif uid == event["user"]:
+                text = f"This is dumb. Your problem. It's done."
+                self.bot.redis.hset("permissions", uid, new_level)
             elif new_level < 0:
                 text = f"If you say so. {user} is now {new_level}..."
                 self.bot.redis.hset("permissions", uid, new_level)
